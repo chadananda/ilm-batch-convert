@@ -32,10 +32,10 @@ I just need a place where I can plug in my code for converting documents. The gr
 ```
 { 
   documents: [
-language: "English:en",   bookshelf: "Fiction",   title: "Moby-Dick",
-author: "Herman Melville",   modified: "2013-08-31T09:05:07.740Z",
-size: "102456",   crc32: "461707669",
-uri: "English/Fiction/Herman Melville/Moby-Dick/index.html"
+     language: "English:en",   bookshelf: "Fiction",   title: "Moby-Dick",
+     author: "Herman Melville",   modified: "2013-08-31T09:05:07.740Z",
+     size: "102456",   crc32: "461707669",
+     uri: "English/Fiction/Herman Melville/Moby-Dick/index.html"
    ],
 }
 ```
