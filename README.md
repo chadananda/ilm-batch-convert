@@ -1,4 +1,4 @@
-# 'Ilm Batch convertion script for TXT->HTML,
+# 'Ilm Batch Convert TXT->HTML,
 ### A Custom Grunt Build Script for Text Dcouments
 
 
@@ -53,25 +53,21 @@ Each document gets two CouchDB JSON records. Only  changed files need be pushed 
 * Here's what I have in mind for organizational structure:
 
 ```
-/ Common-Assets (whatever is here will be added to every document if not already provided)
-        / css
-                style.css
-                logo.svg (converts to png)
-                watermark-logo.png
 / Library (nested source folder with lots of document types)
    / Language (eg. en)
         / Bookshelf (eg. Fiction)
-                / Author (eg. Herman Melville)
-                        / Book Title (eg Moby Dick)
-                                source-document.doc
-                                meta.json (optional JSON object to override path-inferred meta)
-                                / assets (copy over after grunt optimization/post processing)
-                                        style.css (overrides "Common-Assets" in this example)
-                                        cover.png
-                                        style1.css
-                                        style2.sass
-                                        tools.js
-                                        intro-audio.mp3
+            (any additional nesting from here ignored until final 'author' folder)
+                   / Author (eg. Herman Melville) 
+                         Book Title.txt
+                         Book Title.json (optional JSON object to override path-inferred meta-data)
+                         / Book Title (option additional assets for this document)
+                               style.css (overrides "Common-Assets" in this example)
+                               cover.png
+                               style1.css
+                               style2.sass
+                               tools.js
+                               intro-audio.mp3
+                               
 / Library-Processed (mirrored folder with all processed  & HTML documents)
    index.html (linked list to all documents in Library-Processed)
    / Language (eg. en)
@@ -86,7 +82,15 @@ Each document gets two CouchDB JSON records. Only  changed files need be pushed 
                                         style2.css (converted then minified)
                                         tools.js (minified)
                                         intro-audio.mp3
+                                        
 / IlmConverter (application)
-        / config.js (server access creds etc.)
+      config.js (server access creds etc.)
+      / Assets (whatever is here will be added to every document if not already provided)
+           style.css
+           logo.svg (converts to png)
+           watermark-logo.png
+      / Templates
+           base.html (some form of templating)
+        
 ```
 
