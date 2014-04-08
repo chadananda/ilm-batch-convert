@@ -83,8 +83,8 @@ Each document gets two CouchDB JSON records. Only  changed files need be pushed 
                                         tools.js (minified)
                                         intro-audio.mp3
                                         
-/ IlmConverter (application)
-      config.js (server access creds etc.)
+/ Ilm-Convert (application)
+      config.json (server access creds etc.)
       / Assets (whatever is here will be added to every document if not already provided)
            style.css
            logo.svg (converts to png)
