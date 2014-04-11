@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="{{=meta.lan}}">
+<head>
+  <meta charset="utf-8">
+  <title>{{=meta.title}}</title>
+  <!-- add all metadata here -->
+  {{~it.meta :value:index}}
+    <meta name="{{=index}} content="{{=value}}">
+  {{~}}
+</head>
+<body>
+  <div id="book-header">{{=doc.header}}</div>
+  <div id="book-body">{{=doc.body}}</div>
+  <div id="book-endmatter">{{=doc.endmatter}}</div>
+</body>
+</html>
