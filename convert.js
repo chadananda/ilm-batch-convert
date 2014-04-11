@@ -10,56 +10,27 @@ var langs = require('languages');
 //argv[1] is current script path
 var inputFile = process.argv[2];
 var outputFile = process.argv[3];
-
-//Conversion starts here inputFile -> outputFile
-var content = fs.readFileSync(inputFile, 'binary').toString();
-
-// Set up target document object
 var doc = {
   meta: {},
   header: '',
-  body: '',
+  body: fs.readFileSync(inputFile, 'binary').toString(),
   endmatter: '',
+  inputType: path.extname(inputFile),
 };
 
 // Gather up metadata
-doc.meta = metaData(inputFile, content);
-if (doc.meta.hasJSON) content = content.replace(/\{\{[^}]+}}/g, '');
+doc.meta = metaData(inputFile, doc.body);
+if (doc.meta.hasJSON) doc.body = doc.body.replace(/\{\{[^}]+}}/g, '');
 delete doc.meta.jasJSON;
 
-// FILTER: remove tabs
-content = content.replace(/\t/g, ' ');
 
-// FILTER: fix smart quotes and m dash with unicode
-content = textPretty(content);
-
-// FILTER replace meta blocks with comments
-content = content.replace(/=================================/, '<!--');
-content = content.replace(/=================================/, '-->');
-
-// FILTER replace old page markers <p#> and <c:#>
-content = content.replace(/<p([0-9]+)>/g, "<span data-pg='$1'></span>");
-
-// FILTER: markdown
-md.setOptions({
-  gfm: false, tables: false, breaks: false, pedantic: false,
-  sanitize: false, smartLists: false, smartypants: false
-});
-content =  md(content);
-content = content.replace(/<\/p>/g, "\n\n");
-
-// FILTER add consistent header
-doc.header = HTMLHeaderTemplate(doc.meta);
-
-// FILTER: Number Paragraphs
-content = numberPars(content, doc.meta);
-
-// FILTER: HTML5 template
-doc.body = content;
-var outputHTML = HTML5Template(doc);
+// Process content into HTML document depending on file type
+if (doc.inputType === '.txt') doc = processFileTXT(doc);
+ else if (doc.inputType === '.htm') doc = processFileHTML(doc);
 
 
 // OUTPUT
+var outputHTML = doc.html;
 // first recursively create output directory if it doesn't exist
 var mkdirp = function(dirname){
     if(fs.existsSync(dirname)) return;
@@ -77,6 +48,49 @@ process.exit(0);
 
 
 
+
+
+
+
+// One Process function for each major file type
+// Process HTML Files
+function processFileHTML(doc){
+  // parse out into blocks
+  // re-assemble with new paragraph numbering
+  // add style sheet
+  // move assets to the assets folder
+  return doc;
+}
+
+// One Process function for each major file type
+// Process TXT files
+function processFileTXT(doc){
+  content = doc.body;
+  // FILTER: remove tabs
+  content = content.replace(/\t/g, ' ');
+  // FILTER: fix smart quotes and m dash with unicode
+  content = textPretty(content);
+  // FILTER replace meta blocks with comments
+  content = content.replace(/=================================/, '<!--');
+  content = content.replace(/=================================/, '-->');
+  // FILTER replace old page markers <p#> and <c:#>
+  content = content.replace(/<p([0-9]+)>/g, "<span id='pg_$1'></span>");
+  // FILTER: markdown
+  md.setOptions({
+    gfm: false, tables: false, breaks: false, pedantic: false,
+    sanitize: false, smartLists: false, smartypants: false
+  });
+  content =  md(content);
+  content = content.replace(/<\/p>/g, "\n\n");
+  // FILTER add consistent header
+  doc.header = HTMLHeaderTemplate(doc.meta);
+  // FILTER: Number Paragraphs
+  content = numberPars(content, doc.meta);
+  doc.body = content;
+  // FILTER: HTML5 template into HTML document
+  doc.html = HTML5Template(doc);
+  return doc;
+}
 
 
 
@@ -168,15 +182,12 @@ function numberPars(content, meta){ // what about sections dude?
   var num = 1;
   var next = content.indexOf('<p data-num');
   if (next>0) num++;
-
   next = content.indexOf('<p>', next+1);
   while (next>0) {
     content = content.slice(0, next) + "<p id='"+num+"'>" +content.slice(next+3);
     num++;
     next = content.indexOf('<p>', next+1);
   }
-
-
   return content;
 }
 
