@@ -102,6 +102,9 @@ function HTML5Template(doc) {
   Object.getOwnPropertyNames(doc.meta).forEach(function(val) {
     out+= ' <meta name="'+(val)+'" content="'+(doc.meta[val])+'"> '+"\n";
   });
+  out+= " <link rel='stylesheet' type='text/css' href='http://dl.dropbox.com/u/382588/JS/Projects/textconversion/Grunt-Batch/Ilm-Convert/Assets/ilm-style.css' /> \n";
+  out+= " <link rel='stylesheet' type='text/css' href='http://dl.dropbox.com/u/382588/JS/Projects/textconversion/Grunt-Batch/Ilm-Convert/Assets/ilm-print.css' /> \n";
+  out+= " <link rel='stylesheet' type='text/css' href='http://dl.dropbox.com/u/382588/JS/Projects/textconversion/Grunt-Batch/Ilm-Convert/Assets/development.css' /> \n";
   out+='</head>'+"\n";
   out+='<body> '+"\n";
   out+=' <div id="book-header">'+(doc.header)+'</div>'+"\n\n";
@@ -112,12 +115,14 @@ function HTML5Template(doc) {
 }
 
 function HTMLHeaderTemplate(meta) { // just a sample, run this through internationalization later
-  var header='';
-  if (meta.title) header+= "<h1 id='title'>" + meta.title + "</h1> \n";
-  if (meta.author) header+= "<h3 id='author'> By " + meta.author + "</h3> \n";
-  if (meta.translator) header+= "<h4 id='translator'> Translated by " + meta.translator + "</h4> \n";
-  if (meta.coverimage) header+= "<img id='coverimage' href='"+ meta.coverimage +"' /> \n";
-  header+= "<hr class='underheader' />";
+  var header = '';
+  if (meta.coverimage) header+= "\n<img id='coverimage' href='"+ meta.coverimage +"' class='bookcover noprint' alt='book cover' /> \n";
+  header += "\n <div id='titlebox'> \n";
+  if (meta.title) header += " <h1 id='title'>" + meta.title + "</h1> \n";
+  if (meta.author) header += " <h3 id='author'> By " + meta.author + "</h3> \n";
+  if (meta.translator) header += " <h4 id='translator'> Translated by " + meta.translator + "</h4> \n";
+  header += "</div> \n";
+  header += "<hr class='underheader' /> \n";
   return header;
 }
 

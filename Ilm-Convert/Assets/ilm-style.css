@@ -1,0 +1,123 @@
+
+@import url('http://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic');
+
+@font-face {
+  font-family: GentiumPlus;
+  src: url(GentiumPlus-R.woff);
+}
+@font-face {
+  font-family: GentiumPlus;
+  font-style: italic;
+  src: url(GentiumPlus-I.woff);
+}
+
+
+     body {font-family: "Libre Baskerville", "Times New Roman", serif; font-size: 17pt;
+       background-color:#FFF; margin: 2em; margin-left:1em; padding-left: 1em;
+     }
+     img.bookcover {float: right; width: 140px; margin:0; padding:0;}
+     #titlebox {margin-right:150px; margin-bottom: 5em;}
+     .author {font-style:italic; text-align:center; font-weight: normal; color: #667666; font-size: 80%;}
+     .title {
+       font-size: 2em;
+       font-style:normal; text-align:center; font-weight: bold; margin:0;
+       font-variant:small-caps; margin-bottom: .5em;
+     }
+     .title {
+       font-style:normal; font-weight: bold; margin:.5em; margin-left:0;
+     }
+     .section_title {
+       margin-top:1.5em; margin-bottom: .75em; font-weight: bold; color: #667666;
+     }
+     .subtitle {font-style:normal; text-align:center; font-weight: normal;
+      font-variant:small-caps; margin: 2em;}
+     .subtitle {font-style:italic; text-align:center; font-weight: normal;}
+
+     p, p span.ed_note {font-family: GentiumPlus, "Times New Roman", serif; padding-top:0; margin-top:0; text-align:justify;
+       font-style: normal; font-weight: normal;text-transform: normal; letter-spacing: normal;
+       line-height: 1.4em; color: #333;
+       /* orphans: 2; widows: 2; hyphens: auto;   does nothing */
+
+     }
+     p span.ed_note {font-size: 93%}
+     p.verse, p.sig {white-space: pre; margin-left:1em; padding:0;}
+     p.salutation {font-style: italic;}
+
+     h3.section_header {margin-top:200px; text-align:center; margin: 5em; font-weight: normal;}
+     div.section_header .date {font-size: 16pt; text-align:center; font-style:italic; font-weight:normal; margin: 1em;}
+
+     div.section_header .desc {font-size: 12pt; text-align:center; font-style:italic; font-weight:normal; }
+     div.section_header .venue {font-size: 12pt; text-align:center; font-style:italic; margin-top:0; font-weight:normal; }
+     div.section_header .notes {font-size: 11pt; text-align:center; font-style:normal; margin:2em; font-variant:small-caps; font-weight:normal; }
+     div.par_label {color: gray; font-style:italic;}
+     div.talk {padding:1em; border:1px solid gray; margin:1em; margin-bottom: 4em; background-color:white; }
+     div.sectionnum {font-size: 20pt; font-weight: normal; text-align:center; color:gray; }
+
+
+     /* paragraph numbering   */
+     body {counter-reset: autonumber;}
+
+     span.parnum {
+       font-size: 10pt; color: #667666; margin-right:.8em; vertical-align:top; padding: 0; margin-left:-2em;
+       background-color: inherit;
+     }
+     span.secnum {
+       font-size: 12pt; color: #667666; margin-right:.8em; padding: 0; margin-left:-2em;
+       margin-top: 5px;
+       background-color: inherit; padding:5px; font-weight:normal;
+       color: white; background: silver; border-radius:.5em; padding-bottom:3px;
+     }
+
+     /* Note: turn on autonumbering, make sure it aligns with printed numbering
+              then hard-code p data-num attributes to match;
+     p[data-num]:before {
+       content: counter(autonumber) " "; color: maroon; margin-right: .25em;
+       counter-increment: autonumber;
+     } */
+
+     p span[data-pg]:before {
+          content: "pg." attr(data-pg); font-size: 8pt; color:gray; vertical-align:top;
+          background-color: #667666; margin-top:-3em;
+          border: .5px solid silver;
+          border-radius: 6px; background-color: silver; color: white;
+          padding-left:3px; padding-right: 3px; padding-bottom:2px; padding-top:0;
+     }
+
+    .print {display: none;}
+
+     q.baha, q.abd, q.bab, q.jesus, q.muhammad, q.sacred {font-style: italic;}
+     q.baha {color: #7A0000;}
+     q.bab {color: #456A45;}
+     q.abd {color: #3A597A;}
+     q.noclose {quotes: '“' '';}
+
+     .hl {background-color: inherit;}
+
+     span.doc {font-style:inherit; background-color: inherit;} /* get rid of this? */
+     .section_start {}
+
+     .ellipsis {font-size:80%; font-style:normal; font-weight:normal;
+      letter-spacing: .2em; padding-left:1px;
+     }
+
+    hr {
+     border: 0; height: 1px; background: #333;
+     background: -webkit-gradient(linear, 0 0, 100% 0, from(#EEE), to(#EEE), color-stop(50%, #333));
+    }
+
+    a, a:visited, a:hover {color: darkblue;}
+    a:hover {background-color: lightyellow;}
+
+    li {margin-left:1em; line-height: 1.6em;}
+
+    #toc {margin-top:5em; margin-bottom:3em;}
+
+  h1,h2,h3,h4,h5,h6 {page-break-before: auto;} /* by default, these should never be widowed back at the end of a page*/
+
+
+
+:root {
+  /* allows chrome to print background colors such as the gray numbers and page markers */
+  -webkit-print-color-adjust: exact;
+}
+

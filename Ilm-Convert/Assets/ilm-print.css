@@ -1,0 +1,50 @@
+
+
+
+
+@media print {
+  .print {display:inherit;}
+  .noprint {display:none;}
+
+  .page_break_before {page-break-before: always;}
+  .no_page_break {page-break-before: never;}
+
+  h1,h2,h3,h4 {page-break-before: auto; } /* by default, these should never be widowed back at the end of a page*/
+
+
+  p span[data-pg] {display: none;}
+  #titlebox {margin-right:10px; margin-bottom: 5em; margin-top:10em; page-break-after: always;}
+  q.baha, q.abd, q.bab {color: black;}
+  h1.title {}
+  h2.title { font-weight: normal;
+    margin-bottom: 3em; padding-top: 4em;
+    text-align:center;}
+  h1.author {}
+  h3.section_title {
+    margin-top:1.2em; margin-bottom: 1em;
+    page-break-before: auto;  letter-spacing: 0;
+    font-weight: normal;
+  }
+  .hl {background-color: inherit;}
+  p {font-size: 14pt;} /* print a bit larger */
+  p, p span.parnum, p span.ed_note, h1, h2, h3, h4 {color: black !important;}
+
+
+
+}
+
+
+/*
+
+@page { size: auto; margin:0;
+  size: 8.5in 11in;
+  margin-top:.5in; margin-bottom:.75in;
+}
+
+
+@page:right {margin-right: 0; }
+@page:left  {margin-left: 0; }
+
+
+@page:first {margin:0; margin-left: .25in;}
+ */
