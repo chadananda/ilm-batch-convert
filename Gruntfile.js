@@ -3,10 +3,10 @@ var path = require("path");
 
 module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
-  //var outputDir = "Library-Output";
+  var outputDir = "Library-Output";
   grunt.initConfig({
     //specify the output directory
-    outputDir: "Library-Output",
+    outputDir: outputDir,
     //clean all the output files
     clean: {
       all: {
@@ -43,38 +43,51 @@ module.exports = function(grunt) {
       },
       //watch output files and trigger connect server to reload
       livereload: {
-        files: [ '<%=outputDir%>/**/*.{html,htm}' ],
+        files: [ "<%=outputDir%>/**/*.{htm,html}" ],
         options: { livereload: true }
       }
     },
     //connect webserver to serve files
     connect: {
+      options: {
+        port: 9000,
+        livereload: 35729,
+        hostname: 'localhost'
+      },
       livereload: {
         options: {
-          port: 9000,
-          open: true,
-          hostname: "localhost",
           base: "<%=outputDir%>"
         }
-      },
+      } 
     },
-//  //generate index.html
-//    jade: {
-//      compile: {
-//        options: {
-//          data: {
-//            indexfiles: grunt.file.expand( { cwd: outputDir }, "**/index.htm" )
-//          }
-//        },
-//        files: {
-//          "<%=outputDir%>/index.html": ["Library/index.jade"]
-//        }
-//      }
-//    }
+    jade: {
+      compile: {
+        options: {
+          data: {
+            indexfiles: grunt.file.expand( { cwd: outputDir }, "**/index.htm" )
+          }
+        },
+        files: {
+          "<%=outputDir%>/index.html": ["Library/index.jade"]
+        }
+      }
+    }
   });
-  grunt.loadTasks("tasks"); //loads tasks defined in tasks directory
+
+  //loads tasks defined in tasks directory
+  grunt.loadTasks("tasks"); 
+
+  //build output files only if input files are modified
   grunt.registerTask("build", ["newer:website_generator:all"]);
+  
+  //clean all output files, build everyting from scracth
   grunt.registerTask("rebuild", ["clean:all", "website_generator:all"]);
-  grunt.registerTask("default", ["build"]);
+  
+  //redbuild index.html in output directory
+  grunt.registerTask("index", ["jade"]);
+  
+  //watch files, and serve files with livereload
   grunt.registerTask("live", ["connect:livereload", "watch"]);
+  
+  grunt.registerTask("default", ["build"]);
 };
