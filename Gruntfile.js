@@ -7,6 +7,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     //specify the output directory
     outputDir: outputDir,
+
     //clean all the output files
     clean: {
       all: {
@@ -15,12 +16,14 @@ module.exports = function(grunt) {
         ]
       }
     },
+
     //configure website generator
     website_generator: {
       all: {
         options: {
-          convertScript : "convert.js",  //this script will be called for every input file
-          stopOnError : true             //stop grunt if any conversion fails
+          convertScript : "convert.js",    //this script will be called for every input file
+          stopOnError : true,              //stop grunt if any conversion fails
+          assetsDir : 'Ilm-Convert/Assets' //source assets directory
         },
         files: [{ 
           expand: true,
@@ -35,6 +38,7 @@ module.exports = function(grunt) {
         }]
       }
     },
+
     watch: {
       //watch input files and run generator automatically
       website_generator: {
@@ -47,6 +51,7 @@ module.exports = function(grunt) {
         options: { livereload: true }
       }
     },
+
     //connect webserver to serve files
     connect: {
       options: {
@@ -60,6 +65,8 @@ module.exports = function(grunt) {
         }
       } 
     },
+
+    //generate index.html (master index file) based on Ilm-Convert/Templates/index.jade file
     jade: {
       compile: {
         options: {
@@ -68,10 +75,11 @@ module.exports = function(grunt) {
           }
         },
         files: {
-          "<%=outputDir%>/index.html": ["Library/index.jade"]
+          "<%=outputDir%>/index.html": ["Ilm-Convert/Templates/index.jade"]
         }
       }
     }
+
   });
 
   //loads tasks defined in tasks directory
