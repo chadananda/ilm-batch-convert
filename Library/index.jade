@@ -1,0 +1,9 @@
+html
+  head
+    title Generated Output
+  body
+    ol
+      - for( var i in indexfiles )
+        - var path = indexfiles[i]
+        li
+          a( href=path )= path

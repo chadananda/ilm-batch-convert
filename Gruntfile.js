@@ -3,6 +3,7 @@ var path = require("path");
 
 module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
+  //var outputDir = "Library-Output";
   grunt.initConfig({
     //specify the output directory
     outputDir: "Library-Output",
@@ -56,7 +57,20 @@ module.exports = function(grunt) {
           base: "<%=outputDir%>"
         }
       },
-    }
+    },
+//  //generate index.html
+//    jade: {
+//      compile: {
+//        options: {
+//          data: {
+//            indexfiles: grunt.file.expand( { cwd: outputDir }, "**/index.htm" )
+//          }
+//        },
+//        files: {
+//          "<%=outputDir%>/index.html": ["Library/index.jade"]
+//        }
+//      }
+//    }
   });
   grunt.loadTasks("tasks"); //loads tasks defined in tasks directory
   grunt.registerTask("build", ["newer:website_generator:all"]);
