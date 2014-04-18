@@ -1,3 +1,5 @@
+/*jslint node: true */
+
 "use strict";
 var path = require("path");
 
@@ -25,14 +27,14 @@ module.exports = function(grunt) {
           stopOnError : true,              //stop grunt if any conversion fails
           assetsDir : 'Ilm-Convert/Assets' //source assets directory
         },
-        files: [{ 
+        files: [{
           expand: true,
           cwd: "Library",
           src: ["**/*.{txt,html}"],
           dest: '<%=outputDir%>',
           rename: function(dest, inputfile){
             //map input txt filename to output index.htm filename
-            //take input file path, delete extension with regex, add index.htm to the end 
+            //take input file path, delete extension with regex, add index.htm to the end
             return path.join(dest, inputfile.replace(/\.[^\.\/\\]+$/,""), "index.htm");
           }
         }]
@@ -63,7 +65,7 @@ module.exports = function(grunt) {
         options: {
           base: "<%=outputDir%>"
         }
-      } 
+      }
     },
 
     //generate index.html (master index file) based on Ilm-Convert/Templates/index.jade file
@@ -83,19 +85,19 @@ module.exports = function(grunt) {
   });
 
   //loads tasks defined in tasks directory
-  grunt.loadTasks("tasks"); 
+  grunt.loadTasks("tasks");
 
   //build output files only if input files are modified
   grunt.registerTask("build", ["newer:website_generator:all"]);
-  
+
   //clean all output files, build everyting from scracth
   grunt.registerTask("rebuild", ["clean:all", "website_generator:all"]);
-  
+
   //redbuild index.html in output directory
   grunt.registerTask("index", ["jade"]);
-  
+
   //watch files, and serve files with livereload
   grunt.registerTask("live", ["connect:livereload", "watch"]);
-  
+
   grunt.registerTask("default", ["build"]);
 };

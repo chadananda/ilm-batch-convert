@@ -1,3 +1,5 @@
+/*jslint node: true */
+
 'use strict';
 var path = require('path');
 var child_process = require('child_process');
@@ -17,11 +19,11 @@ module.exports = function(grunt) {
     var inputFile = file.src[0];
     var outputFile = file.dest;
     grunt.log.writeln('Processing ' + inputFile);
-    var process = child_process.spawn("node", [ctx.convertScript, inputFile, outputFile]); 
+    var process = child_process.spawn("node", [ctx.convertScript, inputFile, outputFile]);
     process.stdout.on('data', grunt.log.write );
     process.stderr.on('data', grunt.log.error );
     process.on('close', function(code){
-      if(code == 0 )  copyAssets(outputFile, ctx, callback);
+      if(code === 0 )  copyAssets(outputFile, ctx, callback);
       else callback('Process exited with error status ' + code);
     });
   };
@@ -42,19 +44,19 @@ module.exports = function(grunt) {
         stopOnError : true
     });
     if( !ctx.convertScript ){
-        grunt.log.error('convertScript option is not specified, its mandatory.'); 
+        grunt.log.error('convertScript option is not specified, its mandatory.');
         return false;
     }
     if( !grunt.file.exists(ctx.convertScript) ){
-        grunt.log.error('convertScript %s is not found', ctx.convertScript); 
+        grunt.log.error('convertScript %s is not found', ctx.convertScript);
         return false;
     }
     if( !ctx.assetsDir ){
-        grunt.log.error('assetsDir option is not specified, its mandatory.'); 
+        grunt.log.error('assetsDir option is not specified, its mandatory.');
         return false;
     }
     if( !grunt.file.isDir(ctx.assetsDir) ){
-        grunt.log.error('assetsDir %s is not found or not a directory.', ctx.assetsDir); 
+        grunt.log.error('assetsDir %s is not found or not a directory.', ctx.assetsDir);
         return false;
     }
     var done = this.async();
@@ -63,14 +65,14 @@ module.exports = function(grunt) {
     ctx.stopProcessing = false;
     async.eachSeries(this.files,
       function(file, callback){ //callback for each file
-        processEachfile(file, ctx, function(err){ onComplete(err, ctx, callback) } ) 
+        processEachfile(file, ctx, function(err){ onComplete(err, ctx, callback); } );
       },
       function(){ //callback when every file is processed
           if( this.files.length > 1 ){
               grunt.log.writeln("Success : " + ctx.successCount);
               grunt.log.writeln("Fail : " + ctx.failCount);
           }
-          done(ctx.failCount == 0);
+          done(ctx.failCount === 0);
       });
   });
 
